@@ -44,7 +44,8 @@ jobs:
       - name: Build (Next static export)
         working-directory: markdown-transcriber
         run: |
-          npm run build          # com output:'export' gera "out/"
+          npm run build  
+          mkdir -p out        # com output:'export' gera "out/"
           touch out/.nojekyll    # evita problema com caminhos que iniciam com _
 
       - name: Upload artifact

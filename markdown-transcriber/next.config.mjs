@@ -1,13 +1,15 @@
 /** @type {import('next').NextConfig} */
-const repo = 'MarkdownTranscription';
-const isExport = process.env.EXPORT === 'true';
+const repo = 'MarkdownTranscription'; // <-- nome do repositório das páginas
+const isProjectPage = true;           
 
 const nextConfig = {
-  output: isExport ? 'export' : undefined,
+  output: 'export',             
   images: { unoptimized: true },
-  trailingSlash: true,
-  basePath: isExport ? `/${repo}` : '',
-  assetPrefix: isExport ? `/${repo}/` : '',
+  trailingSlash: true,          
+  ...(isProjectPage && {
+    basePath: `/${repo}`,
+    assetPrefix: `/${repo}/`,
+  }),
 };
 
 export default nextConfig;

@@ -1,58 +1,55 @@
-name: Markdown Transcriber Deploy
+name: Markdown Transcriber
 
 on:
-  push:
-    branches: ['main']
-  workflow_dispatch:
+    push:
+        branches: ['main']
+        paths:
+            - 'markdown-transcriber/**'
+    workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+    contents: read
+    pages: write
+    id-token: write
 
 concurrency:
-  group: 'pages'
-  cancel-in-progress: true
+    group: 'pages'
+    cancel-in-progress: true
 
 env:
-  NODE_OPTIONS: --max-old-space-size=6144
+    NODE_OPTIONS: --max-old-space-size=6144
 
 jobs:
-  build-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    build-docusaurus:
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: markdown-transcriber/package-lock.json
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
 
-      - name: Install deps
-        working-directory: markdown-transcriber
-        run: npm ci
+            - name: Install and Build
+              run: |
+                  cd docs
+                  npm install
+                  npm run build
+                  mv build ../build
 
-      - name: Build (Next static export)
-        working-directory: markdown-transcriber
-        run: |
-          npm run build          # com output: 'export' vai gerar "out/"
-          touch out/.nojekyll
+            - name: Setup Pages
+              uses: actions/configure-pages@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+            - name: Upload artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: ./build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: markdown-transcriber/out
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4

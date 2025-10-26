@@ -37,7 +37,7 @@ jobs:
 
             - name: Install and Build
               run: |
-                  cd docs
+                  cd markdown-transcriber
                   npm install
                   npm run build
                   mv build ../build

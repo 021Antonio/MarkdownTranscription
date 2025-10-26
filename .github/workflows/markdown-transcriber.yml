@@ -3,8 +3,6 @@ name: Markdown Transcriber Deploy
 on:
   push:
     branches: ['main']
-    paths:
-      - 'markdown-transcriber/**'
   workflow_dispatch:
 
 permissions:
@@ -44,9 +42,8 @@ jobs:
       - name: Build (Next static export)
         working-directory: markdown-transcriber
         run: |
-            npm run build       # apenas build, ele já gera o "out/"
-            touch out/.nojekyll # evita erro do GitHub Pages
-
+          npm run build          # com output: 'export' vai gerar "out/"
+          touch out/.nojekyll
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

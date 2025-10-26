@@ -32,21 +32,19 @@ jobs:
           cache: "npm"
           cache-dependency-path: markdown-transcriber/package-lock.json
 
-      # (opcional) se quiser que o GitHub Pages injete basePath automaticamente, 
-      # pode habilitar isso. Como já configuramos no next.config, pode omitir.
-      # - name: Setup Pages
-      #   uses: actions/configure-pages@v5
-
-      - name: Install deps
+      - name: Install dependencies
         working-directory: markdown-transcriber
         run: npm ci
 
-      - name: Build (Next static export)
+      - name: Build Next.js static export
         working-directory: markdown-transcriber
         run: |
-          npm run build  
-          mkdir -p out        # com output:'export' gera "out/"
-          touch out/.nojekyll    # evita problema com caminhos que iniciam com _
+          npm run build
+          mkdir -p out
+          touch out/.nojekyll
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

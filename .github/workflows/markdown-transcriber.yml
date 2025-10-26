@@ -41,12 +41,12 @@ jobs:
         working-directory: markdown-transcriber
         run: npm ci
 
-      - name: Build (Next export)
+        - name: Build (Next static export)
         working-directory: markdown-transcriber
         run: |
-          npm run export
-          # Next export gera "out/". Criamos .nojekyll p/ GitHub Pages
-          touch out/.nojekyll
+            npm run build       # apenas build, ele já gera o "out/"
+            touch out/.nojekyll # evita erro do GitHub Pages
+
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

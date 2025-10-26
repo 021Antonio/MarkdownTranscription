@@ -1,12 +1,11 @@
 {
   "name": "markdown-transcriber",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "echo \"(lint opcional)\""
-  },
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "export": "EXPORT=true next build && next export"
+},
   "dependencies": {
     "dompurify": "^3.1.6",
     "html2pdf.js": "^0.10.3",

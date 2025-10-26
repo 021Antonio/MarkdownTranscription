@@ -25,8 +25,10 @@ function mmToPx(mm) {
 
 export default function A4Preview({ markdown, containerRef }) {
   const [pages, setPages] = useState([]);
-  const DOMPurify = useMemo(() => createDOMPurify(window), []);
-
+  const DOMPurify = useMemo(() => {
+   if (typeof window === 'undefined') return { sanitize: (x) => x };
+   return createDOMPurify(window);
+ }, []);
   const html = useMemo(() => {
     const raw = marked.parse(markdown ?? '', { breaks: true, gfm: true });
     return DOMPurify.sanitize(raw);

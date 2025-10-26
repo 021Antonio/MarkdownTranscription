@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["./src/*"]
+      "@atoms/*": ["design-system/atoms/*"],
+      "@molecules/*": ["design-system/molecules/*"],
+      "@organisms/*": ["design-system/organisms/*"],
+      "@templates/*": ["design-system/templates/*"],
+      "@styles/*": ["styles/*"],
+      "@lib/*": ["lib/*"]
     }
   }
 }

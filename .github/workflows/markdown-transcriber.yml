@@ -41,7 +41,7 @@ jobs:
         working-directory: markdown-transcriber
         run: npm ci
 
-        - name: Build (Next static export)
+      - name: Build (Next static export)
         working-directory: markdown-transcriber
         run: |
             npm run build       # apenas build, ele já gera o "out/"
